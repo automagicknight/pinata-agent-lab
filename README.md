@@ -1,62 +1,65 @@
-# Pinata Agent Lab
+# Trust Backup Agent
 
-RaidGuild cohort lab for Pinata agent template experiments.
+A small, self-contained GitHub Actions agent that pins files to IPFS
+via [Pinata](https://pinata.cloud), wraps each one as a
+[CVP-0.1](https://github.com/) object (content-addressed, Ed25519-signed,
+hash-chained), and keeps a locally verifiable ledger of the result.
 
-This repo collects deployable Pinata agent app templates that share a few patterns:
+## What it proves
 
-- chat-first operation
-- read-only `/app` dashboards
-- SQLite-backed local app memory
-- optional `APP_PASSWORD` app auth
-- optional `API_PASSWORD` OpenClaw response/webhook proxy routes
-- workspace docs for bootstrap, identity, operations, tools, and live-instance setup
+- ✅ The pinned content is byte-for-byte unchanged since upload (CID).
+- ✅ A specific Ed25519 key signed each record.
+- ✅ Records form an unbroken, ordered chain (no silent reordering or
+  deletion).
 
-Each template is self-contained in its own subfolder. In the Pinata template UI, use this repo URL and set the matching subfolder.
+## What it does NOT prove or claim
 
-## Templates
+- ❌ Legal ownership of anything described in the pinned content.
+- ❌ Jurisdiction, sovereignty, or legal authority of any kind.
+- ❌ That the content is factually true — only that it is unchanged.
 
-| Template | Subfolder | Focus |
-| --- | --- | --- |
-| RaidGuild Agent App Starter | `raidguild-agent-app-starter` | Generic Next.js + SQLite starter pattern |
-| Micro CRM | `micro-crm` | Solo operator relationship and follow-up dashboard |
-| Practice Coach | `practice-coach` | Skill practice goals, streaks, sessions, and next plans |
-| Field Notes Research | `field-notes-research` | Research notes, sources, themes, quotes, and summaries |
-| Memory Garden | `memory-garden` | Personal memory clusters, resurfacing, and linked notes |
-| Community Quest Board | `community-quest-board` | Cohort or guild quest tracking and weekly coordination |
+See [`docs/OPERATING_RULES.md`](docs/OPERATING_RULES.md) and the CVP-0.1
+specification (§15, Non-Goals and Legal Boundary) for the full scope.
 
-## Publishing From Subfolders
-
-In the Pinata template creation form:
-
-1. Paste this repository URL.
-2. Set the desired subfolder, for example `micro-crm`.
-3. Validate the template.
-4. Deploy a fresh instance and test chat, `/app`, API routes, and optional auth/proxy behavior.
-
-CLI validation should use the same repo and subfolder once Pinata exposes equivalent CLI support for subfolder templates. Until then, the UI subfolder field is the source of truth for this repo layout.
-
-## Local Checks
-
-Each template has its own `package.json`.
+## Quick start
 
 ```bash
-cd micro-crm
 npm install
-npm run build
-npm run typecheck
+npm run gen-keys          # generate an Ed25519 keypair (once)
+npm run init-db           # create db/trust_state.db
+
+export PINATA_JWT="..."
+export ED25519_PRIVATE_KEY="..."   # the private key from gen-keys
+
+npm run build-and-pin payload/example.txt
+npm run verify
 ```
 
-Repeat in the subfolder you are changing.
+See [`docs/BOOTSTRAP.md`](docs/BOOTSTRAP.md) for full setup, including
+how to wire this into GitHub Actions so it runs automatically on push.
 
-## Lab Notes
+## Structure
 
-The root markdown files document the cohort build process and follow-up observations:
+```
+.
+├── .github/workflows/sync-to-pinata.yml   # CI: pin on push, verify, commit ledger
+├── db/
+│   ├── schema.sql                         # SQLite schema
+│   └── trust_state.db                     # generated, do not hand-edit
+├── docs/
+│   ├── BOOTSTRAP.md                       # setup steps
+│   ├── IDENTITY.md                        # agent identity & scope
+│   └── OPERATING_RULES.md                 # chain rules
+├── payload/                               # put files to be pinned here
+├── scripts/
+│   ├── gen-keys.js                        # generate Ed25519 keypair
+│   ├── init-db.js                         # create/reset local ledger
+│   ├── build-and-pin.js                   # pin + sign + record
+│   └── verify.js                          # independently re-verify the chain
+├── agent.config.json                      # agent identity & Pinata config
+└── package.json
+```
 
-- `PROJECTS.md` lists the template ideas.
-- `BATCH_REPORT.md`, `SECOND_PASS_REPORT.md`, and `LAB_FLOW_NOTES.md` summarize build passes.
-- `DESIGN_PASS_STEERING.md` and `NEXT_PASS_STEERING.md` capture iteration guidance.
-- `SCAFFOLD_RULES.md` and `RUNNER_PROMPT.md` preserve the original automation process.
+## License
 
-The standalone starter is also published separately at:
-
-`https://github.com/raid-guild/raidguild-agent-app-starter`
+MIT — see LICENSE.

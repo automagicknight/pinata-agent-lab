@@ -1,0 +1,27 @@
+{
+  "agent_id": "trust-backup-agent-v1",
+  "name": "Trust Zone Backup Agent",
+  "version": "1.0.0",
+  "protocol": {
+    "name": "CVP",
+    "version": "0.1"
+  },
+  "lexicon": {
+    "canonical_cid": "bafkreiah7zzhane2iwpijyx7qiuwajqbmaep3a4pnvuo5f4jcakm4ibnzi",
+    "sequence": 84
+  },
+  "storage": {
+    "provider": "Pinata",
+    "gateway": "https://yellow-managerial-leopon-627.mypinata.cloud/ipfs/",
+    "api_base": "https://api.pinata.cloud",
+    "output_format": "application/vnd.ipld.car"
+  },
+  "security": {
+    "signature_algorithm": "ed25519",
+    "composite_key_hash": "sha512",
+    "require_app_password": true
+  },
+  "chain": {
+    "db_path": "db/trust_state.db"
+  }
+}

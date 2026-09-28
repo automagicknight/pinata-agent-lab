@@ -1,0 +1,21 @@
+{
+  "name": "trust-backup-agent",
+  "version": "1.0.0",
+  "description": "Pins content to IPFS via Pinata, wraps it as a CVP-0.1 object (CID + Ed25519 signature + provenance chain), and records it in a local SQLite ledger.",
+  "type": "module",
+  "scripts": {
+    "build-and-pin": "node scripts/build-and-pin.js",
+    "verify": "node scripts/verify.js",
+    "init-db": "node scripts/init-db.js",
+    "gen-keys": "node scripts/gen-keys.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "canonicalize": "^2.0.0",
+    "multiformats": "^13.1.0",
+    "tweetnacl": "^1.0.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
