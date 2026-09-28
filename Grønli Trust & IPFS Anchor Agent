@@ -1,0 +1,16 @@
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ Grønli Trust & IPFS Anchor Agent                                                      │
+│ Publisher: House of Grønli | Engine: OpenClaw v26 / Pinata Agent Lab                     │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ An autonomous trust backup and provenance agent that packages structured data,       │
+│ vector lexicons, and signed manifests into immutable IPLD .car bundles, automatically   │
+│ pinned to Pinata IPFS with Ed25519 verification and dual GitHub sync.                  │
+│                                                                                        │
+│ Key capabilities:                                                                      │
+│ • IPLD .car Packaging — Converts structured JSON/records into deterministic CAR files │
+│ • Lexicon Auto-Resolution — Validates schema against Trust Ordbok v2.0 (seq 084)      │
+│ • Cryptographic Proof — Calculates SHA-512 composite keys & Ed25519 signatures        │
+│ • Dual-State Sync — Writes local SQLite state while pinning to IPFS & GitHub backup    │
+│                                                                                        │
+│ Tags: actions & transactions | ipfs | pinata | security | openclaw                      │
+└────────────────────────────────────────────────────────────────────────────────────────┘
