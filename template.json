@@ -1,0 +1,52 @@
+{
+  "name": "Grønli Trust & IPFS Anchor Agent",
+  "slug": "hog-trust-agent",
+  "version": "1.0.0",
+  "engine": "OpenClawv26",
+  "publisher": "House of Grønli",
+  "description": "Autonomous agent for building, signing, and pinning immutable CAR trust records to Pinata IPFS.",
+  "category": "actions & transactions",
+  "tags": ["ipfs", "pinata", "provenance", "openclaw", "security"],
+  "repository": {
+    "url": "https://github.com/house-of-gronli/hog-trust-agent-lab",
+    "subfolder": "trust-backup-agent"
+  },
+  "env_vars": [
+    {
+      "name": "PINATA_JWT",
+      "description": "Pinata API JWT token with pinFileToIPFS permissions.",
+      "required": true,
+      "secret": true
+    },
+    {
+      "name": "PINATA_GATEWAY",
+      "description": "Dedicated Pinata Gateway URL.",
+      "default": "https://yellow-managerial-leopon-627.mypinata.cloud",
+      "required": true
+    },
+    {
+      "name": "TRUST_LEXICON_CID",
+      "description": "Canonical CID for Trust Ordbok v2.0.",
+      "default": "bafkreiah7zzhane2iwpijyx7qiuwajqbmaep3a4pnvuo5f4jcakm4ibnzi",
+      "required": true
+    },
+    {
+      "name": "ED25519_PRIVATE_KEY",
+      "description": "Ed25519 signing key for composite record signatures.",
+      "required": true,
+      "secret": true
+    },
+    {
+      "name": "APP_PASSWORD",
+      "description": "Dashboard login protection key.",
+      "required": false,
+      "secret": true
+    }
+  ],
+  "bundled_skills": [
+    "ipfs-car-packer",
+    "sha512-composite-calculator",
+    "ed25519-verifier",
+    "pinata-pinning-gateway"
+  ]
+}
